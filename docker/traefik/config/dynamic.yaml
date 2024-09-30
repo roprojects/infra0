@@ -1,0 +1,7 @@
+http:
+  middlewares:
+    secHeaders:
+      headers:
+        browserXssFilter: true
+    autodetectContenttype:
+      contentType: {}
