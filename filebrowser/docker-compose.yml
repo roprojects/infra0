@@ -1,0 +1,19 @@
+services:
+  fileshare:
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    ports:
+      - 80:80
+    restart: unless-stopped
+    volumes:
+      - './files:/srv:rw'
+      - './filebrowser.db:/database.db:rw'
+      - '/.filebrowser.json:/.filebrowser.json:rw'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`filebrowser.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:80"

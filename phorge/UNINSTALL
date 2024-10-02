@@ -1,16 +1,13 @@
-sudo rm -rf pihole dnsmasq.d log
-mkdir -p pihole dnsmasq.d log
-chmod 777 pihole dnsmasq.d log
-touch log/pihole.log
-
 export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
 
 if command -v docker-compose 2>&1 >/dev/null
 then
- docker-compose up -d
+ docker-compose down
 elif command -v docker 2>&1 >/dev/null
 then
- docker compose up -d
+ docker compose down
 else
  echo "Docker not installed! Aborting..."
 fi
+
+sudo rm -rf phorge_web caddy_data Caddyfile phorge_db phorge_ssh phorge_repo

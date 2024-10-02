@@ -1,7 +1,6 @@
-sudo rm -rf pihole dnsmasq.d log
-mkdir -p pihole dnsmasq.d log
-chmod 777 pihole dnsmasq.d log
-touch log/pihole.log
+sudo rm -rf files filebrowser.db .filebrowser.json
+mkdir -p files filebrowser.db .filebrowser.json
+chmod 777 files filebrowser.db .filebrowser.json
 
 export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
 
