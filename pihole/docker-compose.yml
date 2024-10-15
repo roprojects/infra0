@@ -1,0 +1,37 @@
+#https://github.com/pi-hole/docker-pi-hole/blob/master/examples/docker-compose-caddy-proxy.yml
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:2024.07.0
+    ports:
+      - '4053:53/tcp' #Change 4053 -> 53
+      - '4053:53/udp' #Change 4053 -> 53
+      - "4067:67/udp" #Only required if you are using Pi-hole as your DHCP server, change 4067 -> 67
+      - '80:80/tcp'
+    environment:
+      TZ: "Europe/Zurich" #Change it to yout TZ
+    volumes:
+      - './pihole:/etc/pihole'
+      - './dnsmasq.d:/etc/dnsmasq.d'
+      - './log/pihole.log:/var/log/pihole/pihole.log'
+    cap_add:
+      - NET_ADMIN
+    extra_hosts:
+      - 'router router.homelab.local:192.168.199.1'
+      - 'firewall firewall.homelab.local:192.168.199.2'
+      - 'firewall firewall.homelab.local:192.168.200.1'
+      - 'proxmox proxmox.homelab.local:192.168.200.2'
+      - 'switch switch.homelab.local:192.168.200.3'
+      - 'ap0 ap0.homelab.local:192.168.200.4'
+      - 'ap1 ap1.homelab.local:192.168.200.5'
+      - 'ap2 ap2.homelab.local:192.168.200.6'
+      #Add others if required
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`pihole.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:80"

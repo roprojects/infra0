@@ -1,0 +1,15 @@
+sudo rm -rf files filebrowser.db .filebrowser.json
+mkdir -p files filebrowser.db .filebrowser.json
+chmod 777 files filebrowser.db .filebrowser.json
+
+export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
+
+if command -v docker-compose 2>&1 >/dev/null
+then
+ docker-compose up -d
+elif command -v docker 2>&1 >/dev/null
+then
+ docker compose up -d
+else
+ echo "Docker not installed! Aborting..."
+fi

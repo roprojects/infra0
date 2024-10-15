@@ -1,0 +1,56 @@
+#https://github.com/Zeigren/phorge_docker/blob/main/docker-compose.yml
+services:
+  caddy:
+    image: caddy:latest
+    container_name: "caddy"
+    volumes:
+      - ./phorge_web:/var/www/html:rw
+      - ./caddy_data:/data:rw
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    ports:
+      - "80:80"
+    environment:
+      - DOMAIN=:80
+      - HTTPS=off
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`phorge.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}"
+    depends_on: "phorge"
+    link: "phorge"
+    restart: unless-stopped
+
+  phorge:
+    image: zeigren/phorge:latest
+    container_name: "phorge"
+    volumes:
+      - ./phorge_web:/var/www/html:rw
+      - ./phorge_ssh:/etc/ssh:rw
+      - ./phorge_repo:/var/repo:rw
+      # - ./config/phorge_mailers.json:/usr/src/docker_ph/mailers.json
+    environment:
+      # set UPGRADE_ON_RESTART to true to update phorge
+      - UPGRADE_ON_RESTART=true
+      - PH_BASE_URI=https://phorge.homelab.local
+      - PH_MYSQL_PASS=example_apssword #change password
+      # - PH_CLUSTER_MAILERS=true
+    ports:
+      # SSH Port
+      - 2530:2530
+    depends_on: "mariadb"
+    link: "mariadb"
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:latest
+    container_name: "mariadb"
+    volumes:
+      - ./phorge_db:/var/lib/mysql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=CHANGEME #this should be the same as PH_MYSQL_PASS
+    command: --innodb-buffer-pool-size=268435456 --local-infile=0 --max-allowed-packet=33554432 --sql-mode=STRICT_ALL_TABLES
+    restart: unless-stopped

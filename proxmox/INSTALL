@@ -1,0 +1,2 @@
+wget -q https://enterprise.proxmox.com/iso/proxmox-ve_8.2-2.iso
+#sudo dd bs=4M status=progress if=proxmox-ve_8.2-2.iso of=/dev/<type here your device name eg. sde etc. check it carrefully, all data will be lost on device>

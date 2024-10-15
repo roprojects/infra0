@@ -1,0 +1,38 @@
+services:
+  mediawiki:
+    image: mediawiki:latest
+    container_name: "mediawiki"
+    restart: unless-stopped
+    ports:
+      - 80:80
+    depends_on: "database"
+    links:
+      - database
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`wiki.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}"
+    volumes:
+      - ./images:/var/www/html/images
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+
+  # This key also defines the name of the database host used during setup instead of the default "localhost"
+  database:
+    image: mariadb:latest
+    container_name: "mariadb"
+    restart: unless-stopped
+    environment:
+      # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
+      MYSQL_DATABASE: my_wiki #change this to your database name
+      MYSQL_USER: wikiuser #change this to your username
+      MYSQL_PASSWORD: example_password #change this to your password
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+    volumes:
+      - ./db:/var/lib/mysql

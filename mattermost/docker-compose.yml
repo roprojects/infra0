@@ -1,0 +1,17 @@
+services:
+  mattermost:
+    image: mattermost/platform:9.3.0
+    container_name: "mattermost"
+    ports:
+      - "8065:8065"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`mattermost.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8065"
+    restart: unless-stopped
+    extra_hosts:
+      - "dockerhost:127.0.0.1"

@@ -1,0 +1,53 @@
+#https://github.com/VictoriaMetrics/VictoriaMetrics/blob/master/deployment/docker/docker-compose.yml
+services:
+  # VictoriaMetrics instance, a single process responsible for
+  # storing metrics and serve read requests.
+  victoriametrics:
+    container_name: victoriametrics
+    image: victoriametrics/victoria-metrics:v1.103.0
+    ports:
+      - 8428:8428
+    volumes:
+      - ./vmdata:/storage
+    command:
+      - "--storageDataPath=/storage"
+      - "--httpListenAddr=:8428"
+    networks:
+      - vm_net
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`metrics.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8428"
+
+  # Grafana instance configured with VictoriaMetrics as datasource
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.4.2
+    depends_on:
+      - "victoriametrics"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafanadata:/var/lib/grafana
+      - ./config/single.yml:/etc/grafana/provisioning/datasources/single.yml
+      - ./config/dashboards:/etc/grafana/provisioning/dashboards
+      - ./config/victoriametrics.json:/var/lib/grafana/dashboards/vm.json
+    networks:
+      - vm_net
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app0.entrypoints=web-secure"
+      - "traefik.http.routers.app0.rule=Host(`grafana.homelab.local`)"
+      - "traefik.http.routers.app0.tls=true"
+      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.app0.middlewares=secHeaders@file"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:3000"
+
+networks:
+  vm_net:

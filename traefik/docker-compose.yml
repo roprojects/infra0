@@ -1,0 +1,24 @@
+#https://github.com/wollomatic/simple-traefik/blob/master/docker-compose.yaml
+services:
+  traefik:
+    image: "traefik:v3.1.4"
+    container_name: "traefik"
+    ports:
+      - "80:80"
+      - "443:443"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.traefik-auth.basicauth.removeheader=true"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=foobar:$$2y$$05$$z2KwKI.GmZ43BbwfmPPKw.CSl3rqQ0OhzBbdom.orfsMVKGLW/Xeu" #foobar:foobar
+      - "traefik.http.routers.traefik.rule=Host(`traefik.homelab.local`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.traefik.entrypoints=web-secure"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth, secHeaders@file, autodetectContenttype@file"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./config/traefik.yaml:/etc/traefik/traefik.yaml:ro"
+      - "./config/dynamic.yaml:/etc/traefik/dynamic.yaml:ro"
+      - "./config/acme.json:/etc/traefik/acme.json"
+    restart: unless-stopped
