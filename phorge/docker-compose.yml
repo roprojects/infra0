@@ -15,7 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`phorge.homelab.local`)"
+      - "traefik.http.routers.app0.rule=Host(`phorge.homelab.lan`)"
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
@@ -35,7 +35,7 @@ services:
     environment:
       # set UPGRADE_ON_RESTART to true to update phorge
       - UPGRADE_ON_RESTART=true
-      - PH_BASE_URI=https://phorge.homelab.local
+      - PH_BASE_URI=https://phorge.homelab.lan
       - PH_MYSQL_PASS=example_apssword #change password
       # - PH_CLUSTER_MAILERS=true
     ports:

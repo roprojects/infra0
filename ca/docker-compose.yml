@@ -1,21 +1,21 @@
 services:
   ca:
-    image: smallstep/step-ca:latest
+    image: smallstep/step-ca:0.27.4
     container_name: "ca"
     ports:
       - "9000:9000"
     volumes:
       - "./step:/home/step"
     environment:
-      DOCKER_STEPCA_INIT_NAME: "HomeLab"
-      DOCKER_STEPCA_INIT_DNS_NAMES: "localhost"
+      DOCKER_STEPCA_INIT_NAME: "CA"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "ca.homelab.lan"
       DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT: "true"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`ca.homelab.local`)"
+      - "traefik.http.routers.app0.rule=Host(`ca.homelab.lan`)"
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:9000"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:9000" #change ${IP} to your machine IP
     restart: unless-stopped

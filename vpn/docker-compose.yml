@@ -2,7 +2,7 @@ services:
   wg-easy:
     environment:
       - WG_PORT=1194
-      - WG_DEFAULT_DNS=192.168.200.7 #pihole.home.local, change it to proper value
+      - WG_DEFAULT_DNS=192.168.200.9 #pihole.home.lan, change it to proper value
       - WG_ALLOWED_IPS=192.168.200.0/22
       - WG_DEFAULT_ADDRESS=192.168.198.x
     image: ghcr.io/wg-easy/wg-easy
@@ -22,7 +22,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`vpn.homelab.local`)"
+      - "traefik.http.routers.app0.rule=Host(`vpn.homelab.lan`)"
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"

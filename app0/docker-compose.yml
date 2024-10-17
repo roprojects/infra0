@@ -7,7 +7,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`app0.homelab.local`)"
+      - "traefik.http.routers.app0.rule=Host(`app0.homelab.lan`)"
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
