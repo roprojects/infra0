@@ -5,3 +5,7 @@ http:
         browserXssFilter: true
     autodetectContenttype:
       contentType: {}
+  tls:
+    certificates:
+      - certFile: /certs/traefik.homelab.lan.crt
+        keyFile: /certs/traefik.homelab.lan.key

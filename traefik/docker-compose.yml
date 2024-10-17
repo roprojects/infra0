@@ -21,4 +21,5 @@ services:
       - "./config/traefik.yaml:/etc/traefik/traefik.yaml:ro"
       - "./config/dynamic.yaml:/etc/traefik/dynamic.yaml:ro"
       - "./config/acme.json:/etc/traefik/acme.json"
+      - "./certs:/certs"
     restart: unless-stopped
