@@ -19,7 +19,7 @@ services:
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}" #change ${IP} to this VM IP
     depends_on: "phorge"
     link: "phorge"
     restart: unless-stopped

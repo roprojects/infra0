@@ -24,4 +24,4 @@ services:
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8081"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8081" #change ${IP} to this VM IP

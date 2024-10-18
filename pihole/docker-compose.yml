@@ -7,7 +7,7 @@ services:
       - '4053:53/tcp' #Change 4053 -> 53
       - '4053:53/udp' #Change 4053 -> 53
       - "4067:67/udp" #Only required if you are using Pi-hole as your DHCP server, change 4067 -> 67
-      - '80:80/tcp'
+      - '8080:80/tcp'
     environment:
       TZ: "Europe/Zurich" #Change it to yout TZ
     volumes:
@@ -53,4 +53,4 @@ services:
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:80"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8080" #change ${IP} to this VM IP

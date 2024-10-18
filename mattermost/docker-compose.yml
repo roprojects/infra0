@@ -11,7 +11,7 @@ services:
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8065"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8065" #change ${IP} to this VM IP
     restart: unless-stopped
     extra_hosts:
       - "dockerhost:127.0.0.1"
