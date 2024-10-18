@@ -1,6 +1,7 @@
 services:
   wg-easy:
     environment:
+      - WG_HOST=${IP} #change ${IP} to this VM IP
       - WG_PORT=1194
       - WG_DEFAULT_DNS=192.168.200.9 #pihole.home.lan, change it to proper value
       - WG_ALLOWED_IPS=192.168.200.0/22
@@ -26,4 +27,4 @@ services:
       - "traefik.http.routers.app0.tls=true"
       - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
       - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:51821"
+      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:51821" #change ${IP} to this VM IP
