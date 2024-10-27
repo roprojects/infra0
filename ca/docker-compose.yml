@@ -8,7 +8,7 @@ services:
       - "./step:/home/step"
     environment:
       DOCKER_STEPCA_INIT_NAME: "CA"
-      DOCKER_STEPCA_INIT_DNS_NAMES: "ca.homelab.lan"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "ca.homelab.lan ca.homelab.internal"
       DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT: "true"
     labels:
       - "traefik.enable=true"
