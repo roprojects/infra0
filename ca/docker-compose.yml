@@ -12,10 +12,10 @@ services:
       DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT: "true"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`ca.homelab.lan`)"
-      - "traefik.http.routers.app0.tls=true"
-      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
-      - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:9000" #change ${IP} to your machine IP
+      - "traefik.http.routers.ca.entrypoints=web-secure"
+      - "traefik.http.routers.ca.rule=Host(`ca.homelab.lan`)"
+      - "traefik.http.routers.ca.tls=true"
+      - "traefik.http.routers.ca.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.ca.middlewares=secHeaders@file"
+      - "traefik.http.services.ca.loadbalancer.server.url=http://${IP}:9000" #change ${IP} to your machine IP
     restart: unless-stopped

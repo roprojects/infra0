@@ -20,7 +20,7 @@ entryPoints:
 certificatesResolvers:
   tlschallenge:
     acme:
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory #change it to your CA server or comment out
-      email: opiela@tlen.pl #change it to your email
+      caServer: https://ca.homelab.lan:9000 #change it to your CA server or comment out
+      email: work.opiela@gmail.com #change it to your email
       storage: /etc/traefik/acme.json
       tlsChallenge: {}
