@@ -24,7 +24,7 @@ then
 
  mkdir -p certs
 
- for i in router firewall proxmox switch ap0 ap1 ap2 traefik ca pihole vpn gitlab files wiki mattermost bugs deployment grafana metrics
+ for i in router firewall proxmox switch ap0 ap1 ap2 traefik ca pihole vpn gitlab files wiki mattermost bugs deployment grafana metrics app0
  do
   step ca token ${i}.homelab.lan | tee certs/${i}.token
 
