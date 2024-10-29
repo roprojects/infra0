@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-mkdir -p certs
-
 cat config/dynamic.yaml.template > config/dynamic.yaml
 
 D="homelab.lan"
@@ -15,6 +13,6 @@ do
  ln -f ${i} ${A}.${D}.crt
  ln -f ${A}.key ${A}.${D}.key
 
- echo "    - certFile: /certs/${A}.${D}.crt" >> ../config/dynamic.yaml
- echo "      keyFile: /certs/${A}.${D}.key" >> ../config/dynamic.yaml
+ echo "    - certFile: /certs/${A}.${D}.crt" >> ../../traefik/config/dynamic.yaml
+ echo "      keyFile: /certs/${A}.${D}.key" >> ../../traefik/config/dynamic.yaml
 done

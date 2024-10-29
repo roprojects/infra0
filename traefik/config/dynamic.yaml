@@ -5,6 +5,32 @@ http:
         browserXssFilter: true
     autodetectContenttype:
       contentType: {}
+  routers:
+    app0:
+      entryPoints:
+        - "web-secure"
+      rule: "Host(`app0.homelab.lan`)"
+      tls:
+        certResolver: "tlschallenge"
+      middlewares: "secHeaders@file"
+      service: "app0@file"
+    ca:
+      entryPoints:
+        - "web-secure"
+      rule: "Host(`ca.homelab.lan`)"
+      tls:
+        certResolver: "tlschallenge"
+      middlewares: "secHeaders@file"
+      service: "ca@file"
+  services:
+    app0:
+      loadBalancer:
+        servers:
+        - url: "http://app0.homelab.lan:8081"
+    ca:
+      loadBalancer:
+        servers:
+        - url: "http://ca.homelab.internal:9000"
 tls:
   certificates:
     - certFile: /certs/ap0.homelab.lan.crt
@@ -13,6 +39,8 @@ tls:
       keyFile: /certs/ap1.homelab.lan.key
     - certFile: /certs/ap2.homelab.lan.crt
       keyFile: /certs/ap2.homelab.lan.key
+    - certFile: /certs/app0.homelab.lan.crt
+      keyFile: /certs/app0.homelab.lan.key
     - certFile: /certs/bugs.homelab.lan.crt
       keyFile: /certs/bugs.homelab.lan.key
     - certFile: /certs/ca.homelab.lan.crt
