@@ -15,6 +15,6 @@ do
  ln -f ${i} ${A}.${D}.crt
  ln -f ${A}.key ${A}.${D}.key
 
- echo "      - certFile: /certs/${A}.${D}.crt" >> ../config/dynamic.yaml
- echo "        keyFile: /certs/${A}.${D}.key" >> ../config/dynamic.yaml
+ echo "    - certFile: /certs/${A}.${D}.crt" >> ../config/dynamic.yaml
+ echo "      keyFile: /certs/${A}.${D}.key" >> ../config/dynamic.yaml
 done

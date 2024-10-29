@@ -5,7 +5,43 @@ http:
         browserXssFilter: true
     autodetectContenttype:
       contentType: {}
-  #tls:
-  #  certificates:
-  #    - certFile: /certs/traefik.homelab.lan.crt
-  #      keyFile: /certs/traefik.homelab.lan.key
+tls:
+  certificates:
+    - certFile: /certs/ap0.homelab.lan.crt
+      keyFile: /certs/ap0.homelab.lan.key
+    - certFile: /certs/ap1.homelab.lan.crt
+      keyFile: /certs/ap1.homelab.lan.key
+    - certFile: /certs/ap2.homelab.lan.crt
+      keyFile: /certs/ap2.homelab.lan.key
+    - certFile: /certs/bugs.homelab.lan.crt
+      keyFile: /certs/bugs.homelab.lan.key
+    - certFile: /certs/ca.homelab.lan.crt
+      keyFile: /certs/ca.homelab.lan.key
+    - certFile: /certs/deployment.homelab.lan.crt
+      keyFile: /certs/deployment.homelab.lan.key
+    - certFile: /certs/files.homelab.lan.crt
+      keyFile: /certs/files.homelab.lan.key
+    - certFile: /certs/firewall.homelab.lan.crt
+      keyFile: /certs/firewall.homelab.lan.key
+    - certFile: /certs/gitlab.homelab.lan.crt
+      keyFile: /certs/gitlab.homelab.lan.key
+    - certFile: /certs/grafana.homelab.lan.crt
+      keyFile: /certs/grafana.homelab.lan.key
+    - certFile: /certs/mattermost.homelab.lan.crt
+      keyFile: /certs/mattermost.homelab.lan.key
+    - certFile: /certs/metrics.homelab.lan.crt
+      keyFile: /certs/metrics.homelab.lan.key
+    - certFile: /certs/pihole.homelab.lan.crt
+      keyFile: /certs/pihole.homelab.lan.key
+    - certFile: /certs/proxmox.homelab.lan.crt
+      keyFile: /certs/proxmox.homelab.lan.key
+    - certFile: /certs/router.homelab.lan.crt
+      keyFile: /certs/router.homelab.lan.key
+    - certFile: /certs/switch.homelab.lan.crt
+      keyFile: /certs/switch.homelab.lan.key
+    - certFile: /certs/traefik.homelab.lan.crt
+      keyFile: /certs/traefik.homelab.lan.key
+    - certFile: /certs/vpn.homelab.lan.crt
+      keyFile: /certs/vpn.homelab.lan.key
+    - certFile: /certs/wiki.homelab.lan.crt
+      keyFile: /certs/wiki.homelab.lan.key

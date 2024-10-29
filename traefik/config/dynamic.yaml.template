@@ -5,5 +5,5 @@ http:
         browserXssFilter: true
     autodetectContenttype:
       contentType: {}
-  tls:
-    certificates:
+tls:
+  certificates:
