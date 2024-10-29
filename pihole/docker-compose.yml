@@ -65,13 +65,13 @@ services:
       - 'metrics.homelab.lan:192.168.200.7'
       #Add others if required
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.pihole.entrypoints=web-secure"
-      - "traefik.http.routers.pihole.rule=Host(`pihole.homelab.lan`)"
-      - "traefik.http.routers.pihole.tls=true"
-      - "traefik.http.routers.pihole.tls.certresolver=tlschallenge"
-      - "traefik.http.routers.pihole.middlewares=secHeaders@file"
-      - "traefik.http.services.pihole.loadbalancer.server.url=http://pihole.homelab.internal:8080"
-      - "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^https://pihole.homelab.lan/{0,1}$"
-      - "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=https://pihole.homelab.lan/admin"
+    #labels:
+      #- "traefik.enable=true"
+      #- "traefik.http.routers.pihole.entrypoints=web-secure"
+      #- "traefik.http.routers.pihole.rule=Host(`pihole.homelab.lan`)"
+      #- "traefik.http.routers.pihole.tls=true"
+      #- "traefik.http.routers.pihole.tls.certresolver=tlschallenge"
+      #- "traefik.http.routers.pihole.middlewares=secHeaders@file"
+      #- "traefik.http.services.pihole.loadbalancer.server.url=http://pihole.homelab.internal:8080"
+      #- "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^https://pihole.homelab.lan/{0,1}$"
+      #- "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=https://pihole.homelab.lan/admin"

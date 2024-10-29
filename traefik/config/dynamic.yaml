@@ -5,6 +5,11 @@ http:
         browserXssFilter: true
     autodetectContenttype:
       contentType: {}
+    redirect0:
+      redirectregex:
+        regex: "^https://pihole.homelab.lan/{0,1}$"
+        replacement: "https://pihole.homelab.lan/admin"
+
   routers:
     app0:
       entryPoints:
@@ -12,7 +17,8 @@ http:
       rule: "Host(`app0.homelab.lan`)"
       tls:
         certResolver: "tlschallenge"
-      middlewares: "secHeaders@file"
+      middlewares:
+        - "secHeaders@file"
       service: "app0@file"
     ca:
       entryPoints:
@@ -20,8 +26,19 @@ http:
       rule: "Host(`ca.homelab.lan`)"
       tls:
         certResolver: "tlschallenge"
-      middlewares: "secHeaders@file"
+      middlewares:
+        - "secHeaders@file"
       service: "ca@file"
+    pihole:
+      entryPoints:
+        - "web-secure"
+      rule: "Host(`pihole.homelab.lan`)"
+      tls:
+        certResolver: "tlschallenge"
+      middlewares:
+        - "secHeaders@file"
+        - "redirect0@file"
+      service: "pihole@file"
   services:
     app0:
       loadBalancer:
@@ -30,7 +47,11 @@ http:
     ca:
       loadBalancer:
         servers:
-        - url: "http://ca.homelab.internal:9000"
+        - url: "https://ca.homelab.internal:9000"
+    pihole:
+      loadBalancer:
+        servers:
+        - url: "https://pihole.homelab.internal:8080"
 tls:
   certificates:
     - certFile: /certs/ap0.homelab.lan.crt

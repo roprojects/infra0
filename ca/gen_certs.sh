@@ -22,6 +22,7 @@ elif [ "${1}" == "certs" ]
 then
  set +e
 
+ rm -rf certs
  mkdir -p certs
 
  for i in router firewall proxmox switch ap0 ap1 ap2 traefik ca pihole vpn gitlab files wiki mattermost bugs deployment grafana metrics app0
