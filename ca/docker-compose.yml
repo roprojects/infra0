@@ -17,5 +17,5 @@ services:
       - "traefik.http.routers.ca.tls=true"
       - "traefik.http.routers.ca.tls.certresolver=tlschallenge"
       - "traefik.http.routers.ca.middlewares=secHeaders@file"
-      - "traefik.http.services.ca.loadbalancer.server.url=http://${IP}:9000" #change ${IP} to your machine IP
+      - "traefik.http.services.ca.loadbalancer.server.url=http://ca.homelab.internal:9000"
     restart: unless-stopped

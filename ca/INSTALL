@@ -2,8 +2,6 @@ sudo rm -rf step
 mkdir -p step
 chmod 777 step
 
-export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
-
 if command -v docker-compose 2>&1 >/dev/null
 then
  docker-compose up -d
