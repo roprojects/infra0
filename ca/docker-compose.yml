@@ -10,6 +10,7 @@ services:
       DOCKER_STEPCA_INIT_NAME: "CA"
       DOCKER_STEPCA_INIT_DNS_NAMES: "ca.homelab.lan ca.homelab.internal"
       DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT: "true"
+    #Do not work, required traefik dynamic.yaml configuration
     #labels:
       #- "traefik.enable=true"
       #- "traefik.http.routers.ca.entrypoints=web-secure"
@@ -17,5 +18,5 @@ services:
       #- "traefik.http.routers.ca.tls=true"
       #- "traefik.http.routers.ca.tls.certresolver=tlschallenge"
       #- "traefik.http.routers.ca.middlewares=secHeaders@file"
-      #- "traefik.http.services.app0.loadBalancer.server.url=http://app0.homelab.internal:9000"
+      #- "traefik.http.services.ca.loadBalancer.server.url=http://ca.homelab.internal:9000"
     restart: unless-stopped

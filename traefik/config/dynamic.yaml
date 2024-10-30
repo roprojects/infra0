@@ -51,7 +51,7 @@ http:
     pihole:
       loadBalancer:
         servers:
-        - url: "https://pihole.homelab.internal:8080"
+        - url: "http://pihole.homelab.internal:8080"
 tls:
   certificates:
     - certFile: /certs/ap0.homelab.lan.crt
