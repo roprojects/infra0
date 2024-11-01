@@ -12,7 +12,7 @@ services:
       - "traefik.http.middlewares.traefik-auth.basicauth.users=foobar:$$2y$$05$$z2KwKI.GmZ43BbwfmPPKw.CSl3rqQ0OhzBbdom.orfsMVKGLW/Xeu" #foobar:foobar
       - "traefik.http.routers.traefik.rule=Host(`traefik.homelab.lan`)"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefik.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.traefik.tls.certresolver=stepca"
       - "traefik.http.routers.traefik.entrypoints=web-secure"
       - "traefik.http.routers.traefik.middlewares=traefik-auth, secHeaders@file, autodetectContenttype@file"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
@@ -22,4 +22,7 @@ services:
       - "./config/dynamic.yaml:/etc/traefik/dynamic.yaml:ro"
       - "./config/acme.json:/etc/traefik/acme.json"
       - "./certs:/certs"
+      - "./cacert:/etc/traefik/cacert/:ro"
     restart: unless-stopped
+    environment:
+      - SSL_CERT_FILE=/etc/traefik/cacert/root_ca.crt

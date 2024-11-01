@@ -1,6 +1,10 @@
+set -e
+
 sudo rm -rf config/acme.json
 touch config/acme.json
 chmod 600 config/acme.json
+
+ln -sf $HOME/.step/certs cacert
 
 ./gen_dynamic.sh
 
@@ -13,3 +17,5 @@ then
 else
  echo "Docker not installed! Aborting..."
 fi
+
+set +e

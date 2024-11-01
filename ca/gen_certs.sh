@@ -13,9 +13,9 @@ then
 
  step --version
 
- echo -n "Enter fingerprint: "
+ rm -rf ~/.step
 
- read FF
+ FF=$(cat password.txt | grep "finger" | cut -d ' ' -f 4)
 
  step ca bootstrap --ca-url https://ca.homelab.internal:9000 --fingerprint ${FF} --install
 elif [ "${1}" == "certs" ]
@@ -27,6 +27,8 @@ then
 
  for i in router firewall proxmox switch ap0 ap1 ap2 traefik ca pihole vpn gitlab files wiki mattermost bugs deployment grafana metrics app0
  do
+  cat password.txt | grep "passw"
+
   step ca token ${i}.homelab.lan | tee certs/${i}.token
 
   step ca certificate --token $(cat certs/${i}.token) ${i}.homelab.lan certs/${i}.crt certs/${i}.key

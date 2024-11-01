@@ -13,7 +13,7 @@ services:
     volumes:
       - './pihole:/etc/pihole'
       - './dnsmasq.d:/etc/dnsmasq.d'
-      - './log/pihole.log:/var/log/pihole/pihole.log'
+      - './log:/var/log/pihole'
     cap_add:
       - NET_ADMIN
     extra_hosts:
@@ -65,6 +65,7 @@ services:
       - 'metrics.homelab.lan:192.168.200.7'
       #Add others if required
     restart: unless-stopped
+    #Not working, changes in dynamic.yaml needed
     #labels:
       #- "traefik.enable=true"
       #- "traefik.http.routers.pihole.entrypoints=web-secure"

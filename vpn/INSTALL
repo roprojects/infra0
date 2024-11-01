@@ -1,6 +1,4 @@
-sudo rm -rf wireguard
-mkdir -p wireguard
-chmod 777 wireguard
+rm -rf wireguard
 
 export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
 

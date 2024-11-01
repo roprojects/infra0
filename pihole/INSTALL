@@ -1,7 +1,6 @@
+set -e
+
 sudo rm -rf pihole dnsmasq.d log
-mkdir -p pihole dnsmasq.d log
-chmod 777 pihole dnsmasq.d log
-touch log/pihole.log
 
 if command -v docker-compose 2>&1 >/dev/null
 then
@@ -12,3 +11,9 @@ then
 else
  echo "Docker not installed! Aborting..."
 fi
+
+sleep 10
+
+docker logs pihole 2> /dev/null | grep "Assigning random password" | tee password.txt
+
+set +e

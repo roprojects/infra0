@@ -6,7 +6,7 @@ D="homelab.lan"
 
 cd certs
 
-for i in $(ls *.crt | grep -v "${D}")
+for i in $(ls *.crt 2> /dev/null | grep -v "${D}")
 do
  A=$(echo ${i} | sed -r -e 's/\.crt//g')
 
