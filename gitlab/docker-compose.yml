@@ -6,22 +6,14 @@ services:
     hostname: 'gitlab.homelab.lan'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.homelab.lan'
+        external_url 'http://gitlab.homelab.lan'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
     ports:
-      - '80:80'
-      - '443:443'
+      - '8082:80'
+      #- '8443:443'
       - '2222:22'
     volumes:
       - '$GITLAB_HOME/config:/etc/gitlab'
       - '$GITLAB_HOME/logs:/var/log/gitlab'
       - '$GITLAB_HOME/data:/var/opt/gitlab'
     shm_size: '256m'
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`gitlab.homelab.lan`)"
-      - "traefik.http.routers.app0.tls=true"
-      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
-      - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}:8081" #change ${IP} to this VM IP

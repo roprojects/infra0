@@ -48,6 +48,15 @@ http:
       middlewares:
         - "secHeaders@file"
       service: "vpn@file"
+    gitlab:
+      entryPoints:
+        - "web-secure"
+      rule: "Host(`gitlab.homelab.lan`)"
+      tls:
+        certResolver: "stepca"
+      middlewares:
+        - "secHeaders@file"
+      service: "gitlab@file"
     #firewall:
     #  entryPoints:
     #    - "web-secure"
@@ -75,9 +84,14 @@ http:
       loadBalancer:
         servers:
         - url: "http://vpn.homelab.internal:51821"
+    gitlab:
+      loadBalancer:
+        servers:
+        - url: "http://gitlab.homelab.internal:8082"
     #firewall:
     #  loadBalancer:
     #    servers:
     #    - url: "https://firewall.homelab.internal"
+
 #tls:
 #  certificates:
