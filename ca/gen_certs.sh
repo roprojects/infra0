@@ -15,9 +15,16 @@ then
 
  rm -rf ~/.step
 
- FF=$(cat password.txt | grep "finger" | cut -d ' ' -f 4)
+ if [ -f password.txt ]
+ then
+  FF=$(cat password.txt | grep "finger" | cut -d ' ' -f 4)
 
- step ca bootstrap --ca-url https://ca.homelab.internal:9000 --fingerprint ${FF} --install
+  step ca bootstrap --ca-url https://ca.homelab.internal:9000 --fingerprint ${FF} --install
+ else
+  echo "Execute: step ca bootstrap --ca-url https://ca.homelab.internal:9000 --fingerprint <paste step-ca fingerprint here> --install"
+  echo "and run your script again."
+  exit 1
+ fi
 elif [ "${1}" == "certs" ]
 then
  set +e

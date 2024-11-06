@@ -6,5 +6,6 @@ services:
     volumes:
       - './gitlab-runner/config:/etc/gitlab-runner'
       - '/var/run/docker.sock:/var/run/docker.sock'
-    enviroment:
+    environment:
       TZ: "Europe/Zurich"
+      CA_CERTIFICATES_PATH: "/etc/gitlab-runner/certs/ca.crt"
