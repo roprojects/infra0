@@ -20,10 +20,15 @@ sleep 10
 
 docker logs ca 2> /dev/stdout | grep -Ei "(CA administrative|Root Fingerprint)" | grep -v "^20" | tee password.txt
 
+cp -r ca.json step/config/
+
 docker compose exec ca step ca provisioner add acme --type ACME
+
 docker compose restart
 
 sleep 10
 
 ./gen_certs.sh install
+
+#Not needed if we have auto cert generation in traefik
 #./gen_certs.sh certs
