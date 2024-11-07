@@ -1,6 +1,6 @@
 set -e
 
-sudo rm -rf config/acme.json
+sudo rm -rf config/acme.json cacert
 touch config/acme.json
 chmod 600 config/acme.json
 
