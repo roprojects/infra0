@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if command -v docker-compose 2>&1 >/dev/null
 then
  docker-compose down
