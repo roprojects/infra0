@@ -1,9 +1,10 @@
+#!/usr/bin/env bash
+
 set -e
 
 sudo rm -rf gitlab-runner
 mkdir -p gitlab-runner/config
 mkdir -p gitlab-runner/config/certs
-touch gitlab-runner/config/config.toml
 
 if [ ! -d $HOME/.step ]
 then
@@ -24,4 +25,4 @@ else
  echo "Docker not installed! Aborting..."
 fi
 
-set +e
+exit 0
