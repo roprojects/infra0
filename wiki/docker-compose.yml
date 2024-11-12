@@ -4,24 +4,17 @@ services:
     container_name: "mediawiki"
     restart: unless-stopped
     ports:
-      - 80:80
-    depends_on: "database"
+      - 8084:80
+    depends_on:
+      - "database"
     links:
       - database
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`wiki.homelab.lan`)"
-      - "traefik.http.routers.app0.tls=true"
-      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
-      - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}"  #change ${IP} to this VM IP
     volumes:
       - ./images:/var/www/html/images
       # After initial setup, download LocalSettings.php to the same directory as
       # this yaml and uncomment the following line and use compose to restart
       # the mediawiki service
-      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
 
   # This key also defines the name of the database host used during setup instead of the default "localhost"
   database:
