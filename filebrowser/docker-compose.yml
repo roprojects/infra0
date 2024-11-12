@@ -3,7 +3,7 @@ services:
     image: filebrowser/filebrowser
     container_name: filebrowser
     ports:
-      - 81:80
+      - 8083:80
     restart: unless-stopped
     volumes:
       - './files:/srv:rw'
