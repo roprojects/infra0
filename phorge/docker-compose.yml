@@ -8,20 +8,14 @@ services:
       - ./caddy_data:/data:rw
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     ports:
-      - "80:80"
+      - "8086:80"
     environment:
       - DOMAIN=:80
       - HTTPS=off
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app0.entrypoints=web-secure"
-      - "traefik.http.routers.app0.rule=Host(`phorge.homelab.lan`)"
-      - "traefik.http.routers.app0.tls=true"
-      - "traefik.http.routers.app0.tls.certresolver=tlschallenge"
-      - "traefik.http.routers.app0.middlewares=secHeaders@file"
-      - "traefik.http.services.app0.loadbalancer.server.url=http://${IP}" #change ${IP} to this VM IP
-    depends_on: "phorge"
-    link: "phorge"
+    depends_on:
+      - "phorge"
+    links:
+      - "phorge"
     restart: unless-stopped
 
   phorge:
@@ -35,14 +29,16 @@ services:
     environment:
       # set UPGRADE_ON_RESTART to true to update phorge
       - UPGRADE_ON_RESTART=true
-      - PH_BASE_URI=https://phorge.homelab.lan
+      - PH_BASE_URI=https://bugs.homelab.lan
       - PH_MYSQL_PASS=example_apssword #change password
       # - PH_CLUSTER_MAILERS=true
     ports:
       # SSH Port
       - 2530:2530
-    depends_on: "mariadb"
-    link: "mariadb"
+    depends_on:
+      - "mariadb"
+    links:
+      - "mariadb"
     restart: unless-stopped
 
   mariadb:
@@ -51,6 +47,6 @@ services:
     volumes:
       - ./phorge_db:/var/lib/mysql:rw
     environment:
-      - MYSQL_ROOT_PASSWORD=CHANGEME #this should be the same as PH_MYSQL_PASS
+      - MYSQL_ROOT_PASSWORD=example_apssword #this should be the same as PH_MYSQL_PASS
     command: --innodb-buffer-pool-size=268435456 --local-infile=0 --max-allowed-packet=33554432 --sql-mode=STRICT_ALL_TABLES
     restart: unless-stopped

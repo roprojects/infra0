@@ -1,9 +1,6 @@
-sudo rm -rf phorge_web caddy_data Caddyfile phorge_db phorge_ssh phorge_repo
-mkdir -p phorge_web caddy_data phorge_db phorge_ssh phorge_repo
-touch Caddyfile
-chomd 777 phorge_web caddy_data phorge_db phorge_ssh phorge_repo
-
-export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
+sudo rm -rf phorge_web caddy_data phorge_db phorge_ssh phorge_repo
+mkdir -p phorge_web
+chmod 777 phorge_web
 
 if command -v docker-compose 2>&1 >/dev/null
 then

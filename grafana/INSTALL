@@ -1,8 +1,7 @@
 sudo rm -rf grafanadata vmdata
-mkdir -p grafanadata vmdata
-chmod 777 grafanadata vmdata
 
-export IP=$(ip route get 1 | grep "via" | awk '{print $7;}')
+mkdir -p grafanadata
+chmod 777 grafanadata
 
 if command -v docker-compose 2>&1 >/dev/null
 then
