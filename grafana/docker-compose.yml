@@ -9,9 +9,11 @@ services:
       - 8088:8428
     volumes:
       - ./vmdata:/storage
+      - ./config:/config:ro
     command:
       - "--storageDataPath=/storage"
       - "--httpListenAddr=:8428"
+      - "-promscrape.config=/config/scrape.yaml"
     networks:
       - vm_net
     restart: unless-stopped

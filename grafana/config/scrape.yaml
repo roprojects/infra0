@@ -2,4 +2,9 @@ scrape_configs:
 - job_name: node-exporter
   static_configs:
   - targets:
-    - vm1.homelab.internal:9100
+    - vm0.homelab.internal:9100 #on vm0.homelab.internal is installed node_exporter, change it if needed, add here all virtual machines or physical hosts with node_exporter installed
+    - vm1.homelab.internal:9100 #on vm1.homelab.internal is installed node_exporter, change it if needed, add here all virtual machines or physical hosts with node_exporter installed
+- job_name: victoriametrics
+  static_configs:
+  - targets:
+    - http://metrics.homelab.internal:8088/metrics #on metrics.homelab.internal is installed VictoriaMetric on port 8088 (see docker-compose.yml), change it if needed
