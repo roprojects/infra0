@@ -6,6 +6,11 @@ services:
       - WG_DEFAULT_DNS=192.168.200.1 #change it to proper value
       - WG_ALLOWED_IPS=192.168.200.0/22
       - WG_DEFAULT_ADDRESS=192.168.198.x
+      - PASSWORD_HASH="$2a$12$gsM9m3XplghOPW72xge5XOCH6D1vzyJj34EL6MRn77UGhALeaLTkm" #password: foobar, change it by executing "docker run -it ghcr.io/wg-easy/wg-easy wgpw YOUR_PASSWORD" and paste here
+      - UI_ENABLE_SORT_CLIENTS=true
+      - WG_ENABLE_ONE_TIME_LINKS=true
+      - UI_CHART_TYPE=1
+      - UI_TRAFFIC_STATS=true
     image: ghcr.io/wg-easy/wg-easy
     container_name: vpn
     volumes:
