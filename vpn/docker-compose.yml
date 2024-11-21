@@ -6,7 +6,7 @@ services:
       - WG_DEFAULT_DNS=192.168.200.1 #change it to proper value
       - WG_ALLOWED_IPS=192.168.200.0/22
       - WG_DEFAULT_ADDRESS=192.168.198.x
-      - PASSWORD_HASH="$2a$12$gsM9m3XplghOPW72xge5XOCH6D1vzyJj34EL6MRn77UGhALeaLTkm" #password: foobar, change it by executing "docker run -it ghcr.io/wg-easy/wg-easy wgpw YOUR_PASSWORD" and paste here
+      - PASSWORD_HASH=$$2a$$12$$9jy12/wwr0VK5NczmsZcju6wvct6K84otbByLqyjHlvK9ITFgXKXq #password: foobar, change it by executing "docker run -it ghcr.io/wg-easy/wg-easy wgpw 'YOUR_PASSWORD'" and paste here without ' or " and double $ (add an additional $ before each existing $ symbol)
       - UI_ENABLE_SORT_CLIENTS=true
       - WG_ENABLE_ONE_TIME_LINKS=true
       - UI_CHART_TYPE=1
