@@ -1,0 +1,22 @@
+services:
+  ldap:
+    image: bitnami/openldap:2
+    container_name: "ldap"
+    ports:
+      #- '1389:1389' #only for non-tls connections
+      - '1636:1636'
+    environment:
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=adminpassword #change it!
+      - LDAP_USERS=user01,user02 #change it to your own users
+      - LDAP_PASSWORDS=password01,password02 #change it to your own users passwords
+      - LDAP_ROOT='dc=homelab,dc=internal'
+      - LDAP_ENABLE_TLS=yes
+      - LDAP_REQUIRE_TLS=yes
+      - LDAP_TLS_CERT_FILE=/opt/bitnami/openldap/certs/ldap.crt
+      - LDAP_TLS_KEY_FILE=/opt/bitnami/openldap/certs/ldap.key
+      - LDAP_TLS_CA_FILE=/opt/bitnami/openldap/certs/ldapCA.crt
+    volumes:
+      - './certs:/opt/bitnami/openldap/certs:ro'
+      - './data:/bitnami/openldap'
+    restart: unless-stopped

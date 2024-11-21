@@ -1,0 +1,17 @@
+sudo rm -rf data
+mkdir -p data && chmod 777 data
+
+if [ ! -d certs ]
+then
+ ./certs.sh
+fi
+
+if command -v docker-compose 2>&1 >/dev/null
+then
+ docker-compose up -d
+elif command -v docker 2>&1 >/dev/null
+then
+ docker compose up -d
+else
+ echo "Docker not installed! Aborting..."
+fi
