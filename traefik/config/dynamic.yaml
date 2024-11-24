@@ -9,6 +9,10 @@ http:
       redirectregex:
         regex: "^https://pihole.homelab.lan/{0,1}$"
         replacement: "https://pihole.homelab.lan/admin"
+    redirect1:
+      redirectregex:
+        regex: "^https://keycloak.homelab.lan/{0,1}$"
+        replacement: "https://keycloak.homelab.lan/admin"
 
   routers:
     app0:
@@ -111,6 +115,25 @@ http:
       middlewares:
         - "secHeaders@file"
       service: "metrics@file"
+    sso:
+      entryPoints:
+        - "web-secure"
+      rule: "Host(`sso.homelab.lan`)"
+      tls:
+        certResolver: "stepca"
+      middlewares:
+        - "secHeaders@file"
+      service: "sso@file"
+    keycloak:
+      entryPoints:
+        - "web-secure"
+      rule: "Host(`keycloak.homelab.lan`)"
+      tls:
+        certResolver: "stepca"
+      middlewares:
+        - "secHeaders@file"
+        - "redirect1@file"
+      service: "keycloak@file"
     #firewall:
     #  entryPoints:
     #    - "web-secure"
@@ -166,6 +189,14 @@ http:
       loadBalancer:
         servers:
         - url: "http://metrics.homelab.internal:8088"
+    sso:
+      loadBalancer:
+        servers:
+        - url: "http://sso.homelab.internal:8089"
+    keycloak:
+      loadBalancer:
+        servers:
+        - url: "http://keycloak.homelab.internal:8090"
     #firewall:
     #  loadBalancer:
     #    servers:
