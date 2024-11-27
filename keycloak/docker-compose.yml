@@ -8,4 +8,4 @@ services:
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin # Change it!
-    command: "start-dev"
+    command: "start-dev --hostname=https://keycloak.homelab.lan"

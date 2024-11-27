@@ -6,6 +6,9 @@ services:
     restart: unless-stopped
     volumes:
       - ./params.yml:/params.yml
+    environment:
+      #- GEN_CERT=1
+      - PARAM_FILE=/params.yml
 
   php:
     image: php:fpm-alpine
