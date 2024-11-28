@@ -1,0 +1,25 @@
+services:
+  samba:
+    build: .
+    container_name: samba
+    volumes:
+      - ./shared:/shared
+      - ./shared2:/shared2
+      - ./smb.conf:/etc/samba/smb.conf
+    ports:
+      - "139:139"
+      - "445:445"
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: "FILE-SHARE0" #Change it to your own name
+      SERVICE_PORT: "445"
+      SERVICE_TYPE: "_smb._tcp"
+  avahi:
+    image: nunofgs/avahi
+    container_name: avahi
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: "host"
+    restart: unless-stopped
+    depends_on:
+      - samba
